@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Efficient Training of Generalizable Visuomotor Policies via Control-Aware Augmentation">
+  <meta name="keywords" content="Zero-shot Generalization, Visuomotor Policies, Data Augmentation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Training-Free Generation of Temporally Consistent Rewards from VLMs</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <!-- <link href="./static/css/googlecss.css"
+        rel="stylesheet"> -->
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  
+  <!-- 引入 MathJax 库 -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+  <script src="./static/js/jquerymin351.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    .author-block {
+      display: block;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Training-Free Generation of Temporally Consistent Rewards from VLMs </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="team-name"><b><sup>1</sup> Beijing Institute of Technology <p style="font-size: 70%"></p></b></span>
+              <span class="team-name"><b><sup>2</sup> Beijing Innovation Center of Humanoid Robotics <p style="font-size: 70%"></p></b></span>
+              <span class="author-block" style="font-size: 100%;"><a href="https://nuomizai.github.io/" target="_blank" style="color: orange !important; text-decoration: none;">Yinuo Zhao<sup>1</sup><sup>&loz;</sup></a>, Jiale Yuan<sup>3</sup>, Zhiyuan Xu<sup>2</sup>, Xiaoshuai Hao<sup>4</sup>, Xinyi Zhang<sup>1</sup>, Kun Wu<sup>2</sup>, Zhengping Che<sup>2</sup>
+              <span class="author-block" style="font-size: 100%;">Chi Harold Liu<sup>1</sup><sup>&#8224;</sup>, Jian Tang<sup>2</sup><sup>&#8224;</sup></span>
+                <div class="is-size-6 publication-authors"> 
+                  <span class="author-block"></span>         
+                </div>
+              </span>
+            </div>
+            <div style="margin-top: 10px; margin-bottom: 20px;">
+              <a class="button is-dark is-rounded" href="https://arxiv.org/abs/2507.04789" target="_blank">
+                <span class="icon"><i class="fas fa-file-alt"></i></span>
+                <span>Paper</span>
+              </a>
+              <!-- <a class="button is-dark" href="你的视频链接" target="_blank">
+                <span class="icon"><i class="fas fa-video"></i></span>
+                <span>Video</span>
+              </a> -->
+              <a class="button is-dark is-rounded" href="https://github.com/nuomizai/T2VLM" target="_blank">
+                <span class="icon"><i class="fas fa-code"></i></span>
+                <span>Code</span>
+              </a>
+              <!-- <a class="button is-dark is-rounded" href="你的补充材料链接" target="_blank">
+                <span class="icon"><i class="fas fa-book"></i></span>
+                <span>Supplementary</span>
+              </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+         <video id="teaser" autoplay muted loop playsinline height="100%">
+          <source src="./static/videos/teaser.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>  -->
+
+  <section class="section" id="single-task-1">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Recent advances in vision-language models (VLMs) have
+              significantly improved performance in embodied tasks such
+              as goal decomposition and visual comprehension. However,
+              providing accurate rewards for robotic manipulation without fine-tuning VLMs remains challenging due to the absence of domain-specific robotic knowledge in pre-trained
+              datasets and high computational costs that hinder realtime applicability. To address this, 
+              we propose T<sup>2</sup>-VLM, a novel training-free, temporally consistent framework that
+              generates accurate rewards through tracking the changes in VLM-derived subgoals. Specifically, our method first
+              queries the VLM to establish spatially aware subgoals and
+              an initial completion estimate before each round of interaction. We then employ a Bayesian tracking algorithm to
+              update the completion status dynamically, using spatial hidden states to generate structured rewards for reinforcement
+              learning (RL) agents. This approach enhances long-horizon decision-making and improves failure recovery capabilities with RL. Extensive experiments indicate that T<sup>2</sup>-VLM 
+              achieves state-of-the-art performance in two robot manipulation benchmarks, 
+              demonstrating superior reward accuracy with reduced computation consumption. We believe
+              our approach not only advances reward generation techniques but also contributes to the broader field of embodied
+              AI.
+            </p>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!--/ Abstract. -->
+
+      <!-- Hardware Setup. -->    
+      <!-- / Hardware Setup. -->
+
+      <!-- RoboMIND Data Analysis. -->
+      <section class="section" id="demo">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+              <h2 class="title is-3">Method</h2>
+              <div class="hero-body">
+                <div class="yush-div-center">
+                  <img src="./static/images/overview.jpg" class="img-responsive" style="width: 100%; height: auto;">
+                </div>
+                <div class="content has-text-justified">
+                  <p>
+                    In this work, we introduce T<sup>2</sup>-VLM, a novel reward generation framework that ensures temporal consistency by tracking the environment's goal completion status.
+                    Fig. 2 provides an overview of T<sup>2</sup>-VLM. Unlike previous VLM-based reward generation methods, T<sup>2</sup>-VLM queries the VLM <strong>only once per episode</strong>,
+                    then incorporates <strong>temporal information</strong> (object trajectories) to update the VLM-initialized goal status. A Bayesian tracking algorithm is then
+                    proposed to manage the updates, enabling T<sup>2</sup>-VLM to remain training-free, deliver precise reinforcement learning
+                    (RL) rewards, and withstand inaccurate VLM estimations by leveraging temporal data.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- / RoboMIND Data Analysis. -->
+  </section>
+
+  <section class="section" id="demo">
+    <div class="container is-max-desktop">
+      <!-- Experiment  -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Experiments</h2>
+          <!-- Experiment  -->
+          <br>
+          <h2 class="title is-4">Compare T<sup>2</sup>-VLM and VLM-score on Place-same-color task.</h2>
+          <br>
+          <div class="columns">
+            <div class="column has-text-centered">
+              <video poster="" autoplay controls muted loop height="100%" playbackrate="2.0" style="border-radius: 5px;">
+                <source src="./static/videos/T2-VLM.mp4" type="video/mp4">
+              </video>
+              <p style="font-size: 125%"><b>T<sup>2</sup>-VLM</b></p>
+            </div>
+            <div class="column has-text-centered">
+              <video poster="" autoplay controls muted loop height="100%" playbackrate="2.0" style="border-radius: 5px;">
+                <source src="./static/videos/vlm_score.mp4" type="video/mp4">
+              </video>
+              <p style="font-size: 125%"><b>VLM-score</b></p>
+            </div>
+          </div>
+          <br>
+
+          <h2 class="title is-4">Compare T<sup>2</sup>-VLM and other reward generation methods on goal completion ratio.</h2>
+
+          <div class="yush-div-center">
+            <img src="./static/images/gcr.jpg" class="img-responsive">
+          </div>
+          <br>
+          <br>
+          <h2 class="title is-4">Compare T<sup>2</sup>-VLM and VLM-score under different VLM models.</h2>
+
+          <div class="yush-div-center">
+            <img src="./static/images/compare.jpg" class="img-responsive">
+          </div>
+          <br>
+          <br>
+          <h2 class="title is-4">Ablation studies on VLM initialization and Particle filters.</h2>
+          <div class="yush-div-center">
+            <img src="./static/images/ablation.jpg" class="img-responsive" style="width:600px;" alt="ablation">
+          </div>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="demo">
+    <div class="container is-max-desktop">
+      <!-- Experiment  -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Conclusion</h2>
+          <!-- Experiment  -->
+          <p>Generating reliable and time-efficient rewards remains a  major challenge in real-world robot manipulation tasks. In
+            this paper, we propose T<sup>2</sup>-VLM, a Training-free Temporal-consistent reward generation method based on VLM-derived goal decomposition. In this work, we first introduce 
+             an automated procedure to prompt VLMs for decomposed subgoals and initial goal completion estimates before interaction, requiring only a single query per episode. Then,
+            we encode these subgoal completion statuses into a scalar 
+            vector for particle filter initialization, allowing continuous 
+            updates based on temporal observations derived by SAM2. 
+            Experiments across three domains with six robot manipulation tasks show that the T<sup>2</sup>-VLM can well support the
+            training of RL algorithms, offering high reward accuracy with lower computational cost. 
+          </p>
+          <br>
+
+          <div id="single-task">
+            <!-- Performance on Single Tasks.. -->
+            <br>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              The website template was borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>
+              and <a href="https://eureka-research.github.io/">Eureka</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
