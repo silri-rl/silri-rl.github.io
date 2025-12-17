@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Efficient Training of Generalizable Visuomotor Policies via Control-Aware Augmentation">
+  <meta name="keywords" content="Zero-shot Generalization, Visuomotor Policies, Data Augmentation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Real-world Reinforcement Learning from Suboptimal Interventions</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <!-- <link href="./static/css/googlecss.css"
+        rel="stylesheet"> -->
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  
+  <!-- 引入 MathJax 库 -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+  <script src="./static/js/jquerymin351.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    .author-block {
+      display: block;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Real-world Reinforcement Learning from Suboptimal Interventions </h1>
+            <div class="is-size-5 publication-authors">
+              <!-- <span class="team-name"><b><sup>1</sup> Beijing Institute of Technology <p style="font-size: 70%"></p></b></span> -->
+              <!-- <span class="team-name"><b><sup>2</sup> Beijing Innovation Center of Humanoid Robotics <p style="font-size: 70%"></p></b></span> -->
+              <span class="author-block" style="font-size: 100%;"><a href="https://nuomizai.github.io/" target="_blank" style="color: orange !important; text-decoration: none;">anonymous
+              <!-- <span class="author-block" style="font-size: 100%;">Chi Harold Liu<sup>1</sup><sup>&#8224;</sup>, Jian Tang<sup>2</sup><sup>&#8224;</sup></span> -->
+                <div class="is-size-6 publication-authors"> 
+                  <span class="author-block"></span>         
+                </div>
+              </span>
+            </div>
+            <div style="margin-top: 10px; margin-bottom: 20px;">
+              <a class="button is-dark is-rounded" href="https://arxiv.org/abs/2507.04789" target="_blank">
+                <span class="icon"><i class="fas fa-file-alt"></i></span>
+                <span>Paper</span>
+              </a>
+              <!-- <a class="button is-dark" href="你的视频链接" target="_blank">
+                <span class="icon"><i class="fas fa-video"></i></span>
+                <span>Video</span>
+              </a> -->
+              <a class="button is-dark is-rounded" href="https://github.com/nuomizai/T2VLM" target="_blank">
+                <span class="icon"><i class="fas fa-code"></i></span>
+                <span>Code</span>
+              </a>
+              <!-- <a class="button is-dark is-rounded" href="你的补充材料链接" target="_blank">
+                <span class="icon"><i class="fas fa-book"></i></span>
+                <span>Supplementary</span>
+              </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+         <video id="teaser" autoplay muted loop playsinline height="100%">
+          <source src="./static/videos/teaser.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>  -->
+
+  <section class="section" id="single-task-1">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Real-world reinforcement learning (RL) offers a
+              promising approach to training precise and dexterous robotic
+              manipulation policies in an online manner, enabling robots
+              to learn from their own experience while gradually reducing
+              human labor. However, prior real-world RL methods often
+              assume optimal human interventions, overlooking the fact that
+              even expert operators cannot provide identical actions under
+              the same state and avoid mistakes entirely. The question of
+              <i>how to most effectively exploit human interventions to accelerate
+              learning while preserving long-term policy improvement</i> thus
+              remains open. Treating intervention data indiscriminately as
+              robot-collected data suffers from the inherent inefficiency of
+              RL in the early training phase, whereas purely imitating
+              intervention data can degrade the final performance learned
+              by RL. To address this challenge, we propose SiLRI, a state-
+              wise Lagrangian reinforcement learning algorithm, for real-
+              world robot manipulation training. Specifically, we formulate
+              a constrained RL optimization problem, where the constraint
+              bound is determined by the uncertainty of human operators,
+              estimated from their intervention data. A state-wise Lagrange
+              multiplier is then introduced to solve this problem as a min-max
+              optimization. Built upon a human-as-copilot teleoperation sys-
+              tem, our algorithm is evaluated through real-world RL training
+              experiments on several manipulation tasks. Experimental re-
+              sults show that SiLRI effectively exploits human interventions,
+              reducing the time required to reach high performance by
+              at least 10 minutes compared with the state-of-the-art RL
+              method HIL-SERL, and achieving a 100% success rate on long-
+              horizon manipulation tasks where other RL methods struggle
+              to succeed. Code will be open-sourced within the Lerobot
+              framework
+              <!-- Recent advances in vision-language models (VLMs) have
+              significantly improved performance in embodied tasks such
+              as goal decomposition and visual comprehension. However,
+              providing accurate rewards for robotic manipulation without fine-tuning VLMs remains challenging due to the absence of domain-specific robotic knowledge in pre-trained
+              datasets and high computational costs that hinder realtime applicability. To address this, 
+              we propose T<sup>2</sup>-VLM, a novel training-free, temporally consistent framework that
+              generates accurate rewards through tracking the changes in VLM-derived subgoals. Specifically, our method first
+              queries the VLM to establish spatially aware subgoals and
+              an initial completion estimate before each round of interaction. We then employ a Bayesian tracking algorithm to
+              update the completion status dynamically, using spatial hidden states to generate structured rewards for reinforcement
+              learning (RL) agents. This approach enhances long-horizon decision-making and improves failure recovery capabilities with RL. Extensive experiments indicate that T<sup>2</sup>-VLM 
+              achieves state-of-the-art performance in two robot manipulation benchmarks, 
+              demonstrating superior reward accuracy with reduced computation consumption. We believe
+              our approach not only advances reward generation techniques but also contributes to the broader field of embodied
+              AI. -->
+            </p>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!--/ Abstract. -->
+
+      <!-- Hardware Setup. -->    
+      <!-- / Hardware Setup. -->
+
+      <!-- RoboMIND Data Analysis. -->
+      <section class="section" id="demo">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column is-full-width">
+              <h2 class="title is-3">Method</h2>
+              <div class="hero-body">
+                <div class="yush-div-center">
+                  <img src="./static/images/overview.png" class="img-responsive" style="width: 100%; height: auto;">
+                </div>
+                <div class="content has-text-justified">
+                  <p>
+                    In this work, we propose <strong>SiLRI</strong>, a State-wise Lagrangian Reinforcement learning framework from suboptimal Interventions for real-world robot manipulation 
+                    training. Fig. 2 provides an overview of SiLRI. Unlike prior real-world RL methods that assume optimal human interventions, SiLRI defines <strong>a constrained 
+                    RL optimization problem</strong>, where the constraint bound at each state is determined by the corresponding human uncertainty. In states where humans provide consistent data (low entropy), 
+                    the learned policy is constrained to stay close to the human policy, improving training efficiency. In high-entropy states, the constraint is relaxed, encouraging the policy 
+                    to be optimized primarily through its own estimated critic, i.e., RL objective. To solve this constrained RL problem, we introduce <strong>learnable state-wise Lagrange multipliers</strong> and 
+                    cast the optimization as a min-max problem, allowing the agent to adaptively trade off between RL and IL objectives.
+                    <!-- In this work, we introduce T<sup>2</sup>-VLM, a novel reward generation framework that ensures temporal consistency by tracking the environment's goal completion status.
+                    Fig. 2 provides an overview of T<sup>2</sup>-VLM. Unlike previous VLM-based reward generation methods, T<sup>2</sup>-VLM queries the VLM <strong>only once per episode</strong>,
+                    then incorporates <strong>temporal information</strong> (object trajectories) to update the VLM-initialized goal status. A Bayesian tracking algorithm is then
+                    proposed to manage the updates, enabling T<sup>2</sup>-VLM to remain training-free, deliver precise reinforcement learning
+                    (RL) rewards, and withstand inaccurate VLM estimations by leveraging temporal data. -->
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- / RoboMIND Data Analysis. -->
+  </section>
+
+  <section class="section" id="demo">
+    <div class="container is-max-desktop">
+      <!-- Experiment  -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Experiments</h2>
+          <!-- Experiment  -->
+          <br>
+          <div class="content has-text-justified">
+            <p>
+              We design 8 real-world manipulation tasks covering mixed skills, articulated-object manipulation,
+              precise manipulation, and deformable-object handling. These tasks include: (A) Pick-Place Bread (B) Pick-up Spoon (C) Fold
+              Rag (D) Open Cabinet (E) Close Trashbin (F) Push-T (G) Hang Chinese Knot (H) Insert USB. We compare SiLRI with three baseline methods: HIL-SERL, ConRFT, and HG-Dagger.
+              We deliberately introduce external disturbances to examine the robustness and failure recovery ability of each method in four tasks to evaluate the robustness of SiLRI.
+            </p>
+          </div>
+          <!-- <h2 class="title is-4">Compare T<sup>2</sup>-VLM and VLM-score on Place-same-color task.</h2> -->
+          <!-- <div class="yush-div-center">
+            <img src="./static/images/Experiment Task.jpg" class="img-responsive" style="width: 100%; height: auto;">
+          </div> 
+          <br>
+          <h2 class="title is-4">Robustness Experiments</h2>
+          <br> -->
+          <!-- <div class="content has-text-justified">
+            <p>
+              We deliberately introduce external disturbances to examine the robustness and failure recovery ability of each method in four tasks to evaluate the robustness of SiLRI.
+            </p> -->
+          
+          <div class="columns">
+            <div class="column has-text-centered">
+              <video poster="" autoplay controls muted loop height="100%" playbackrate="2.0" style="border-radius: 5px;">
+                <source src="./static/videos/close_trashbin.mp4" type="video/mp4">
+              </video>
+              <p style="font-size: 125%"><b>Close Trashbin</b></p>
+            </div>
+            <div class="column has-text-centered">
+              <video poster="" autoplay controls muted loop height="100%" playbackrate="2.0" style="border-radius: 5px;">
+                <source src="./static/videos/push_T.mp4" type="video/mp4">
+              </video>
+              <p style="font-size: 125%"><b>Push-T</b></p>
+            </div>
+          </div>
+          <br>
+          <div class="columns">
+            <div class="column has-text-centered">
+              <video poster="" autoplay controls muted loop height="100%" playbackrate="2.0" style="border-radius: 5px;">
+                <source src="./static/videos/hang_chinese_knot.mp4" type="video/mp4">
+              </video>
+              <p style="font-size: 125%"><b>Hang Chinese Knot</b></p>
+            </div>
+            <div class="column has-text-centered">
+              <video poster="" autoplay controls muted loop height="100%" playbackrate="2.0" style="border-radius: 5px;">
+                <source src="./static/videos/insert_USB.mp4" type="video/mp4">
+              </video>
+              <p style="font-size: 125%"><b>Insert USB</b></p>
+            </div>
+          </div>
+          <br>
+          <!-- <br>
+          <div class="yush-div-center">
+            <img src="./static/images/Robustness Experiments.png" class="img-responsive">
+          </div> -->
+
+          <!-- <br>
+          <h2 class="title is-4">Ablation studies on Close Trashbin task.</h2>
+          <br>
+          <div class="yush-div-center">
+            <img src="./static/images/ablation.png" class="img-responsive" style="width:600px;" alt="ablation">
+          </div> -->
+          <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="demo">
+    <div class="container is-max-desktop">
+      <!-- Experiment  -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Conclusion</h2>
+          <!-- Experiment  -->
+          <p>
+            In this work, we propose a state-wise Lagrangian reinforcement learning (RL) algorithm from suboptimal interven-
+            tions, for real-world robot manipulation training. Observing the fact that human operators have different confidence level
+            and manipulation skill over different states, a state-dependent constraint is added to the RL objective to automatically
+            adjust the distance between human policy and learned policy. Building on a human-as-copilot teleoperation system, we evaluate 
+            our method with other state-of-the-art online RL and imitation learning methods on 8 manipulation tasks on two
+            embodiments. Experimental results show the efficiency of SiLRI to utilize the suboptimal interventions at the beginning
+            of training and converge to a high success rate at the end. Other ablation studies and investigation experiments also
+            conducted to learn the advantage of SiLRI.
+          </p>
+          <!-- <p>Generating reliable and time-efficient rewards remains a  major challenge in real-world robot manipulation tasks. In
+            this paper, we propose T<sup>2</sup>-VLM, a Training-free Temporal-consistent reward generation method based on VLM-derived goal decomposition. In this work, we first introduce 
+             an automated procedure to prompt VLMs for decomposed subgoals and initial goal completion estimates before interaction, requiring only a single query per episode. Then,
+            we encode these subgoal completion statuses into a scalar 
+            vector for particle filter initialization, allowing continuous 
+            updates based on temporal observations derived by SAM2. 
+            Experiments across three domains with six robot manipulation tasks show that the T<sup>2</sup>-VLM can well support the
+            training of RL algorithms, offering high reward accuracy with lower computational cost. 
+          </p> -->
+          <br>
+
+          <div id="single-task">
+            <!-- Performance on Single Tasks.. -->
+            <br>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              The website template was borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>
+              and <a href="https://eureka-research.github.io/">Eureka</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
