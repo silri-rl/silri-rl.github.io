@@ -108,32 +108,32 @@
               manipulation policies in an online manner, enabling robots
               to learn from their own experience while gradually reducing
               human labor. However, prior real-world RL methods often
-              assume optimal human interventions, overlooking the fact that
-              even expert operators cannot provide identical actions under
-              the same state and avoid mistakes entirely. The question of
-              <i>how to most effectively exploit human interventions to accelerate
-              learning while preserving long-term policy improvement</i> thus
-              remains open. Treating intervention data indiscriminately as
-              robot-collected data suffers from the inherent inefficiency of
-              RL in the early training phase, whereas purely imitating
-              intervention data can degrade the final performance learned
-              by RL. To address this challenge, we propose SiLRI, a state-
-              wise Lagrangian reinforcement learning algorithm, for real-
-              world robot manipulation training. Specifically, we formulate
-              a constrained RL optimization problem, where the constraint
-              bound is determined by the uncertainty of human operators,
-              estimated from their intervention data. A state-wise Lagrange
-              multiplier is then introduced to solve this problem as a min-max
-              optimization. Built upon a human-as-copilot teleoperation sys-
-              tem, our algorithm is evaluated through real-world RL training
-              experiments on several manipulation tasks. Experimental re-
-              sults show that SiLRI effectively exploits human interventions,
-              reducing the time required to reach high performance by
-              at least 10 minutes compared with the state-of-the-art RL
-              method HIL-SERL, and achieving a 100% success rate on long-
-              horizon manipulation tasks where other RL methods struggle
-              to succeed. Code will be open-sourced within the Lerobot
-              framework
+              assume that human interventions are optimal across the entire
+              state space, overlooking the fact that even expert operators
+              cannot consistently provide optimal actions in all states or
+              completely avoid mistakes. Indiscriminately mixing intervention
+              data with robot-collected data inherits the sample inefficiency
+              of RL, while purely imitating intervention data can ultimately
+              degrade the final performance achievable by RL. The question
+              of how to leverage potentially suboptimal and noisy human
+              interventions to accelerate learning without being constrained
+              by them thus remains open. To address this challenge, we
+              propose SiLRI, a state-wise Lagrangian reinforcement learning
+              algorithm for real-world robot manipulation tasks. Specifically,
+              we formulate the online manipulation problem as a constrained
+              RL optimization, where the constraint bound at each state
+              is determined by the uncertainty of human interventions. We
+              then introduce a state-wise Lagrange multiplier and solve the
+              problem via a min-max optimization, jointly optimizing the
+              policy and the Lagrange multiplier to reach a saddle point.
+              Built upon a human-as-copilot teleoperation system, our algo-
+              rithm is evaluated through real-world experiments on diverse
+              manipulation tasks. Experimental results show that SiLRI
+              effectively exploits human suboptimal interventions, reducing
+              the time required to reach a 90% success rate by at least 50%
+              compared with the state-of-the-art RL method HIL-SERL, and
+              achieving a 100% success rate on long-horizon manipulation
+              tasks where other RL methods struggle to succeed.
               <!-- Recent advances in vision-language models (VLMs) have
               significantly improved performance in embodied tasks such
               as goal decomposition and visual comprehension. However,
@@ -276,13 +276,20 @@
           <h2 class="title is-3">Conclusion</h2>
           <!-- Experiment  -->
           <p>
-            In this work, we propose a state-wise Lagrangian reinforcement learning (RL) algorithm from suboptimal interven-
-            tions, for real-world robot manipulation training. Observing the fact that human operators have different confidence level
-            and manipulation skill over different states, a state-dependent constraint is added to the RL objective to automatically
-            adjust the distance between human policy and learned policy. Building on a human-as-copilot teleoperation system, we evaluate 
-            our method with other state-of-the-art online RL and imitation learning methods on 8 manipulation tasks on two
-            embodiments. Experimental results show the efficiency of SiLRI to utilize the suboptimal interventions at the beginning
-            of training and converge to a high success rate at the end. Other ablation studies and investigation experiments also
+            In this work, we propose a state-wise Lagrangian rein-
+            forcement learning (RL) algorithm from suboptimal interven-
+            tions, for real-world robot manipulation training. Observing
+            the fact that human operators have different confidence level
+            and manipulation skill over different states, a state-dependent
+            constraint is added to the RL objective to automatically
+            adjust the distance between human policy and learned policy.
+            Building on a human-as-copilot teleoperation system, we
+            evaluate our method with other state-of-the-art online RL and
+            imitation learning methods on 8 manipulation tasks on two
+            embodiments. Experimental results show the efficiency of
+            SiLRI to utilize the suboptimal interventions at the beginning
+            of training and converge to a high success rate at the end.
+            Other ablation studies and investigation experiments also
             conducted to learn the advantage of SiLRI.
           </p>
           <!-- <p>Generating reliable and time-efficient rewards remains a  major challenge in real-world robot manipulation tasks. In
